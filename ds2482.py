@@ -6,39 +6,39 @@ import adafruit_bus_device.i2c_device as i2c_device
 DS2482_ADDRESS = 0x18
 
 # DS2482 device commands
-COMMAND_DEVICE_RESET        = 0xF0
-COMMAND_SET_POINTER         = 0xE1
-COMMAND_WRITE_CONFIG        = 0xD2
-COMMAND_1W_RESET            = 0xB4
-COMMAND_1W_SINGLE_BIT       = 0x87
-COMMAND_1W_WRITE_BYTE       = 0xA5
-COMMAND_1W_READ_BYTE        = 0x96
-COMMAND_1W_TRIPLET          = 0x78
+COMMAND_DEVICE_RESET = 0xF0
+COMMAND_SET_POINTER = 0xE1
+COMMAND_WRITE_CONFIG = 0xD2
+COMMAND_1W_RESET = 0xB4
+COMMAND_1W_SINGLE_BIT = 0x87
+COMMAND_1W_WRITE_BYTE = 0xA5
+COMMAND_1W_READ_BYTE = 0x96
+COMMAND_1W_TRIPLET = 0x78
 
 # DS2482 read pointer codes
-POINTER_STATUS              = 0xF0
-POINTER_DATA                = 0xE1
-POINTER_CONFIG              = 0xC3
+POINTER_STATUS = 0xF0
+POINTER_DATA = 0xE1
+POINTER_CONFIG = 0xC3
 
 # DS2482 configuration register
-CONFIG_ACTIVE_PULLUP        = 0x01
-CONFIG_STRONG_PULLUP        = 0x04
-CONFIG_1W_OVERDRIVE         = 0x08
+CONFIG_ACTIVE_PULLUP = 0x01
+CONFIG_STRONG_PULLUP = 0x04
+CONFIG_1W_OVERDRIVE = 0x08
 
-CONFIG_MASK                 = 0x0F
+CONFIG_MASK = 0x0F
 
 # DS2482 status register
-STATUS_1W_BUSY              = 0x01
-STATUS_PRESENCE_PULSE       = 0x02
-STATUT_SHORT_DETECTED       = 0x04
-STATUS_LOGIC_LEVEL          = 0x08
-STATUS_DEVICE_RESET         = 0x10
-STATUS_SINGLE_BIT           = 0x20
-STATUS_TRIPLET_BIT          = 0x40
-STATUS_BRANCH_TAKEN         = 0x80
+STATUS_1W_BUSY = 0x01
+STATUS_PRESENCE_PULSE = 0x02
+STATUT_SHORT_DETECTED = 0x04
+STATUS_LOGIC_LEVEL = 0x08
+STATUS_DEVICE_RESET = 0x10
+STATUS_SINGLE_BIT = 0x20
+STATUS_TRIPLET_BIT = 0x40
+STATUS_BRANCH_TAKEN = 0x80
+
 
 class DS2482:
-
     def __init__(self, i2c, address=DS2482_ADDRESS, active_pullup=False):
         self._i2c = i2c_device.I2CDevice(i2c, address)
         self.device_reset()
@@ -70,7 +70,9 @@ class DS2482:
     @device_config.setter
     def device_config(self, config):
         with self._i2c as i2c:
-            i2c.write(bytes([COMMAND_WRITE_CONFIG, (config & 0x0F) | ((~config << 4) & 0xF0)]))
+            i2c.write(
+                bytes([COMMAND_WRITE_CONFIG, (config & 0x0F) | ((~config << 4) & 0xF0)])
+            )
 
     def reset(self):
         with self._i2c as i2c:
@@ -158,7 +160,7 @@ class DS2482:
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     import board
     import busio
@@ -166,10 +168,10 @@ if __name__ == '__main__':
     i2c = busio.I2C(board.SCL, board.SDA)
     ow = DS2482(i2c, active_pullup=True)
 
-    print('config: %02x' % ow.device_config)
-    print('status: %02x' % ow.device_status)
+    print("config: %02x" % ow.device_config)
+    print("status: %02x" % ow.device_status)
 
-    print('single bit 0: %02x' % ow.single_bit(0))
-    print('single bit 1: %02x' % ow.single_bit(1))
+    print("single bit 0: %02x" % ow.single_bit(0))
+    print("single bit 1: %02x" % ow.single_bit(1))
 
     ow.reset_device()
