@@ -83,7 +83,7 @@ class DS2482:
                 if not buf[0] & STATUS_1W_BUSY:
                     break
                 time.sleep(0.001)
-            return buf[0]
+            return not buf[0] & STATUS_PRESENCE_PULSE
 
     def single_bit(self, bit=1, strong_pullup=False, busy=None):
         with self._i2c as i2c:

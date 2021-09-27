@@ -15,6 +15,8 @@ class OneWire(busio.OneWire):
     def reset(self):
         """
         Reset the OneWire bus and read presence
+
+        :return: False when at least one device is present
         """
         return self.ds2482.reset()
 
