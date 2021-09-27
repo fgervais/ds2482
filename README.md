@@ -6,6 +6,11 @@ The DS2482 driver is originally from https://github.com/chasmack/seedling.
 
 ## Usage Example
 
+```bash
+cd project
+git submodule add https://github.com/fgervais/ds2482.git
+```
+
 ```python
 import adafruit_ds18x20
 
