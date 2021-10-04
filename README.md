@@ -13,6 +13,7 @@ git submodule add https://github.com/fgervais/ds2482.git
 
 ```python
 import adafruit_ds18x20
+import busio
 
 from ds2482.ds2482 import DS2482
 from ds2482.onewire import OneWireBus
